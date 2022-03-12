@@ -1,25 +1,66 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends React.Component {
+
+  constructor (){
+    super()
+    this.state = {
+      a: "",
+      b: "",
+      sum: {
+        a: "",
+        b: "",
+        c: ""
+      },
+    }
+  }
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+ }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    axios.post('http://localhost:9000/summation/', {
+      a: this.state.a,
+      b: this.state.b
+    })
+    .then(res => {
+      this.setState({sum: res.data})
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  render (){
+    if(this.state.sum.c !== ""){
+      return(
+        <div className="App">
+          <form>
+            <label>Submit two numbers to receive their summation</label>
+            <input type="text" name="a" value={this.state.a} onChange={this.handleChange}></input>
+            <input type="text" name="b" value={this.state.b} onChange={this.handleChange}></input>
+            <input type="button" value="Submit" onClick={this.handleSubmit}></input>
+          </form>
+          <div> 
+            <p> Result </p>
+            <p>{this.state.sum.a} + {this.state.sum.b} = {this.state.sum.c}</p>
+          </div>
+        </div>
+      )} else {
+        return(
+          <div className="App">
+            <form>
+              <label>Submit two numbers to receive their summation</label>
+              <input type="text" name="a" value={this.state.a} onChange={this.handleChange}></input>
+              <input type="text" name="b" value={this.state.b} onChange={this.handleChange}></input>
+              <input type="button" value="Submit" onClick={this.handleSubmit}></input>
+            </form>
+          </div>
+        )}
+}}
 
 export default App;

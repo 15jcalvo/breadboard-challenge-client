@@ -1,7 +1,13 @@
 .App {
   text-align: center;
+  margin: 5%;
 }
-
+label{
+  margin: 2%;
+}
+input{
+  margin: .3%;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
