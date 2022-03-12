@@ -23,7 +23,7 @@ class App extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    axios.post('http://localhost:9000/summation/', {
+    axios.post('https://breadboard-challenge-api.herokuapp.com/summation', {
       a: this.state.a,
       b: this.state.b
     })
